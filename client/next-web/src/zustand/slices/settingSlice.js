@@ -8,45 +8,45 @@ export const createSettingSlice = (set, get) => ({
   disableMic: false,
   isJournalMode: false,
   languageList: [
-    'Auto Detect',
+    // 'Auto Detect',
     'English',
-    'Spanish',
-    'French',
-    'German',
-    'Hindi',
-    'Italian',
-    'Polish',
-    'Portuguese',
-    'Chinese',
-    'Japanese',
-    'Korean',
+    // 'Spanish',
+    // 'French',
+    // 'German',
+    // 'Hindi',
+    // 'Italian',
+    // 'Polish',
+    // 'Portuguese',
+    // 'Chinese',
+    // 'Japanese',
+    // 'Korean',
   ],
   models: [
+    // {
+    //   id: 'rebyte',
+    //   name: 'ReByte',
+    //   tooltip: 'ReByte platform model, good for most conversation',
+    // },
     {
-      id: 'rebyte',
-      name: 'ReByte',
-      tooltip: 'ReByte platform model, good for most conversation',
-    },
-    {
-      id: 'gpt-3.5-turbo-16k',
-      name: 'GPT-3.5',
+      id: 'gpt-4o',
+      name: 'GPT-4o',
       tooltip: 'Fastest model, good for most conversation',
     },
-    {
-      id: 'gpt-4',
-      name: 'GPT-4',
-      tooltip: 'Medium speed, most capable model, best conversation experience',
-    },
-    {
-      id: 'claude-2',
-      name: 'Claude-2',
-      tooltip: 'Slower model, longer context window for long conversation',
-    },
-    {
-      id: 'meta-llama/Llama-2-70b-chat-hf',
-      name: 'Llama-2-70b',
-      tooltip: 'Open source model, good for most conversation',
-    },
+    // {
+    //   id: 'gpt-4',
+    //   name: 'GPT-4',
+    //   tooltip: 'Medium speed, most capable model, best conversation experience',
+    // },
+    // {
+    //   id: 'claude-2',
+    //   name: 'Claude-2',
+    //   tooltip: 'Slower model, longer context window for long conversation',
+    // },
+    // {
+    //   id: 'meta-llama/Llama-2-70b-chat-hf',
+    //   name: 'Llama-2-70b',
+    //   tooltip: 'Open source model, good for most conversation',
+    // },
   ],
   speakerList: [],
   microphoneList: [],
@@ -70,7 +70,7 @@ export const createSettingSlice = (set, get) => ({
     set({ character: obj });
     // rebyte not supported for database characters yet
     if (obj.location === 'database' && get().selectedModel.has('rebyte')) {
-      set({ selectedModel: new Set(['gpt-3.5-turbo-16k']) });
+      set({ selectedModel: new Set(['gpt-4o']) });
     }
   },
   handleLanguageChange: (e) => {

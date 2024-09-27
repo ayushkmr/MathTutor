@@ -10,7 +10,7 @@ from realtime_ai_character.llm.base import LLM
 load_dotenv()
 
 
-def get_llm(model="gpt-3.5-turbo-16k") -> LLM:
+def get_llm(model="gpt-4o") -> LLM:
     model = os.getenv("LLM_MODEL_USE", model)
 
     if model.startswith("gpt"):
@@ -43,7 +43,7 @@ def get_llm(model="gpt-3.5-turbo-16k") -> LLM:
         raise ValueError(f"Invalid llm model: {model}")
 
 
-def get_chat_model(model="gpt-3.5-turbo-16k") -> BaseChatModel:
+def get_chat_model(model="gpt-4o") -> BaseChatModel:
     model = os.getenv("LLM_MODEL_USE", model)
 
     if model.startswith("gpt"):
@@ -80,14 +80,14 @@ def get_chat_model(model="gpt-3.5-turbo-16k") -> BaseChatModel:
 def get_chat_model_from_env() -> BaseChatModel:
     """GPT-4 has the best performance while generating system prompt."""
 
-    if os.getenv("REBYTE_API_KEY"):
-        return get_chat_model(model="rebyte")
-    elif os.getenv("OPENAI_API_KEY"):
-        return get_chat_model(model="gpt-4")
-    elif os.getenv("ANTHROPIC_API_KEY"):
-        return get_chat_model(model="claude-2")
-    elif os.getenv("ANYSCALE_API_KEY"):
-        return get_chat_model(model="meta-llama/Llama-2-70b-chat-hf")
+    # if os.getenv("REBYTE_API_KEY"):
+    #     return get_chat_model(model="rebyte")
+    if os.getenv("OPENAI_API_KEY"):
+        return get_chat_model(model="gpt-4o")
+    # elif os.getenv("ANTHROPIC_API_KEY"):
+    #     return get_chat_model(model="claude-2")
+    # elif os.getenv("ANYSCALE_API_KEY"):
+    #     return get_chat_model(model="meta-llama/Llama-2-70b-chat-hf")
     elif os.getenv("LOCAL_LLM_URL"):
         return get_chat_model(model="localhost")
 

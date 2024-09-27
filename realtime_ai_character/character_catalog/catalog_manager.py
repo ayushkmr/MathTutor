@@ -79,16 +79,6 @@ class CatalogManager(Singleton):
             voice_id_env = os.getenv(character_id.upper() + "_VOICE_ID")
             voice_id = voice_id_env or str(yaml_content["voice_id"])
             order = yaml_content.get("order", 10**6)
-            
-            # Handle rebyte_api_version
-            rebyte_api_version = yaml_content.get("rebyte_api_version")
-            if rebyte_api_version == '':
-                rebyte_api_version = None
-            elif rebyte_api_version is not None:
-                try:
-                    rebyte_api_version = int(rebyte_api_version)
-                except ValueError:
-                    rebyte_api_version = None
 
             character = Character(
                 character_id=character_id,
@@ -102,9 +92,6 @@ class CatalogManager(Singleton):
                 visibility="public" if source == "default" else yaml_content["visibility"],
                 tts=yaml_content["text_to_speech_use"],
                 order=order,
-                rebyte_api_project_id=yaml_content.get("rebyte_api_project_id", ""),
-                rebyte_api_agent_id=yaml_content.get("rebyte_api_agent_id", ""),
-                rebyte_api_version=rebyte_api_version,
             )
             self.characters[character_id] = character
 
@@ -124,9 +111,6 @@ class CatalogManager(Singleton):
                     tts=yaml_content["text_to_speech_use"],
                     data={
                         "order": order,
-                        "rebyte_api_project_id": yaml_content.get("rebyte_api_project_id", ""),
-                        "rebyte_api_agent_id": yaml_content.get("rebyte_api_agent_id", ""),
-                        "rebyte_api_version": yaml_content.get("rebyte_api_version", ""),
                     },
                     created_at=now,
                     updated_at=now,
@@ -216,9 +200,6 @@ class CatalogManager(Singleton):
                     visibility=character_model.visibility,
                     tts=character_model.tts,
                     data=character_model.data,
-                    rebyte_api_project_id=character_model.data.get("rebyte_api_project_id", ""),
-                    rebyte_api_agent_id=character_model.data.get("rebyte_api_agent_id", ""),
-                    rebyte_api_version=character_model.data.get("rebyte_api_version", ""),
                 )
                 self.characters[character_model.id] = character
                 # TODO: load context data from storage

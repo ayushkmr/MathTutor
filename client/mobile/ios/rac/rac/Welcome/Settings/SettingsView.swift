@@ -29,9 +29,9 @@ enum LlmOption: RawRepresentable, Hashable, CaseIterable, Identifiable, Codable 
         case .rebyte:
             return "rebyte"
         case .gpt35:
-            return "gpt-3.5-turbo-16k"
+            return "gpt-4o"
         case .gpt4:
-            return "gpt-4"
+            return "gpt-4o"
         case .claude:
             return "claude-2"
         case .llama:
@@ -44,9 +44,9 @@ enum LlmOption: RawRepresentable, Hashable, CaseIterable, Identifiable, Codable 
         case .rebyte:
             return "rebyte"
         case .gpt35:
-            return "gpt-3.5"
+            return "gpt-4o"
         case .gpt4:
-            return "gpt-4"
+            return "gpt-4o"
         case .claude:
             return "claude-2"
         case .llama:

@@ -106,7 +106,7 @@ async def check_session_auth(session_id: str, user_id: str, db: Session) -> Sess
 async def websocket_endpoint(
     websocket: WebSocket,
     session_id: str = Path(...),
-    llm_model: str = Query("gpt-3.5-turbo-16k"),
+    llm_model: str = Query("gpt-4o"),
     language: str = Query("en-US"),
     token: str = Query(None),
     character_id: str = Query(None),

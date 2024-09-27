@@ -18,12 +18,12 @@ object LlmOption {
         Llama
     )
     object GPT35 : ILlmOption {
-        override val raw = "gpt-3.5-turbo-16k"
-        override val display = "GPT-3.5"
+        override val raw = "gpt-4o"
+        override val display = "GPT-4o"
     }
 
     object GPT4 : ILlmOption {
-        override val raw = "gpt-4"
+        override val raw = "gpt-4o"
         override val display = "GPT-4"
     }
 

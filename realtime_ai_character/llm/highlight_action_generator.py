@@ -14,7 +14,7 @@ If you found that there are no bullet points meaningful in the given context, re
 
 
 async def generate_highlight_action(journal_text):
-    chat_model = OpenaiLlm(model="gpt-3.5-turbo-16k").chat_open_ai
+    chat_model = OpenaiLlm(model="gpt-4o").chat_open_ai
     prompt = prompt_to_generate_highlight.format(journal_text=journal_text)
     return await chat_model.apredict(prompt)
 
@@ -38,7 +38,7 @@ When you reply, if the user starts a conversation, forget about highlights and t
 
 
 async def generate_highlight_based_on_prompt(journal_text, prompt_text):
-    chat_model = OpenaiLlm(model="gpt-3.5-turbo-16k").chat_open_ai
+    chat_model = OpenaiLlm(model="gpt-4o").chat_open_ai
     prompt = prompt_to_generate_highlight_based_on_prompt.format(
         journal_text=journal_text, prompt_text=prompt_text
     )

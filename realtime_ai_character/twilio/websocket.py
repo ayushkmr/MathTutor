@@ -261,7 +261,7 @@ class TwilioConversationEngine:
 @twilio_router.websocket("/ws")
 async def websocket_endpoint(
     websocket: WebSocket,
-    llm_model: str = Query(default="gpt-3.5-turbo-16k"),
+    llm_model: str = Query(default="gpt-4o"),
     language: str = Query(default="en-US"),
 ):
     llm = get_llm(model=llm_model)
