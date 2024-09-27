@@ -30,9 +30,6 @@ class Character:
     tts: Optional[str] = ""
     order: int = 10**9  # display order on the website
     data: Optional[dict] = None
-    # rebyte_api_project_id: Optional[str] = None
-    # rebyte_api_agent_id: Optional[str] = None
-    # rebyte_api_version: Optional[int] = None
 
 
 @dataclass
