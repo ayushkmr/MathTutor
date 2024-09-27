@@ -54,11 +54,11 @@ GREETING_TXT_MAP = {
 
 
 async def get_current_user(token: str):
-    """Heler function for auth with Firebase."""
+    """Helper function for auth with Firebase."""
     try:
         decoded_token = auth.verify_id_token(token)
     except FirebaseError as e:
-        logger.info(f"Receveid invalid token: {token} with error {e}")
+        logger.info(f"Received invalid token: {token} with error {e}")
         raise HTTPException(status_code=401, detail="Invalid authentication credentials")
 
     return decoded_token["uid"]
@@ -205,7 +205,6 @@ async def handle_receive(
         character_list = [
             (character.name, character.character_id)
             for character in catalog_manager.characters.values()
-            if character.source != "community"
         ]
         character_name_list, character_id_list = zip(*character_list)
         while not character:

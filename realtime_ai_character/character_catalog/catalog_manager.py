@@ -4,6 +4,7 @@ import time
 from contextlib import ExitStack
 from pathlib import Path
 from typing import cast, Optional
+import datetime
 
 import yaml
 from dotenv import load_dotenv
@@ -78,7 +79,18 @@ class CatalogManager(Singleton):
             voice_id_env = os.getenv(character_id.upper() + "_VOICE_ID")
             voice_id = voice_id_env or str(yaml_content["voice_id"])
             order = yaml_content.get("order", 10**6)
-            self.characters[character_id] = Character(
+            
+            # Handle rebyte_api_version
+            rebyte_api_version = yaml_content.get("rebyte_api_version")
+            if rebyte_api_version == '':
+                rebyte_api_version = None
+            elif rebyte_api_version is not None:
+                try:
+                    rebyte_api_version = int(rebyte_api_version)
+                except ValueError:
+                    rebyte_api_version = None
+
+            character = Character(
                 character_id=character_id,
                 name=character_name,
                 llm_system_prompt=yaml_content["system"],
@@ -90,11 +102,38 @@ class CatalogManager(Singleton):
                 visibility="public" if source == "default" else yaml_content["visibility"],
                 tts=yaml_content["text_to_speech_use"],
                 order=order,
-                # rebyte config
-                rebyte_api_project_id=yaml_content["rebyte_api_project_id"],
-                rebyte_api_agent_id=yaml_content["rebyte_api_agent_id"],
-                rebyte_api_version=yaml_content.get("rebyte_api_version"),
+                rebyte_api_project_id=yaml_content.get("rebyte_api_project_id", ""),
+                rebyte_api_agent_id=yaml_content.get("rebyte_api_agent_id", ""),
+                rebyte_api_version=rebyte_api_version,
             )
+            self.characters[character_id] = character
+
+            # Check if character already exists in the database
+            existing_character = self.sql_db.query(CharacterModel).filter(CharacterModel.id == character_id).first()
+            if existing_character is None:
+                # Save character to the database only if it doesn't exist
+                now = datetime.datetime.now()
+                db_character = CharacterModel(
+                    id=character_id,
+                    name=character_name,
+                    system_prompt=yaml_content["system"],
+                    user_prompt=yaml_content["user"],
+                    voice_id=voice_id,
+                    author_id=yaml_content.get("author_id", ""),
+                    visibility="public" if source == "default" else yaml_content["visibility"],
+                    tts=yaml_content["text_to_speech_use"],
+                    data={
+                        "order": order,
+                        "rebyte_api_project_id": yaml_content.get("rebyte_api_project_id", ""),
+                        "rebyte_api_agent_id": yaml_content.get("rebyte_api_agent_id", ""),
+                        "rebyte_api_version": yaml_content.get("rebyte_api_version", ""),
+                    },
+                    created_at=now,
+                    updated_at=now,
+                )
+                db_character.save(self.sql_db)
+            else:
+                logger.info(f"Character {character_id} already exists in the database. Skipping insertion.")
 
             return character_name
 
@@ -148,10 +187,7 @@ class CatalogManager(Singleton):
 
         with self.sql_load_lock.gen_wlock():
             # delete all characters with location == 'database'
-            keys_to_delete = []
-            for character_id in self.characters.keys():
-                if self.characters[character_id].location == "database":
-                    keys_to_delete.append(character_id)
+            keys_to_delete = [k for k, v in self.characters.items() if v.location == "database"]
             for key in keys_to_delete:
                 del self.characters[key]
 
@@ -163,28 +199,28 @@ class CatalogManager(Singleton):
                         if os.getenv("USE_AUTH") == "true"
                         else "anonymous author"
                     )
-                    self.author_name_cache[character_model.author_id] = author_name  # type: ignore
+                    self.author_name_cache[character_model.author_id] = author_name
                 else:
                     author_name = self.author_name_cache[character_model.author_id]
+                
                 character = Character(
-                    character_id=character_model.id,  # type: ignore
-                    name=character_model.name,  # type: ignore
-                    llm_system_prompt=character_model.system_prompt,  # type: ignore
-                    llm_user_prompt=character_model.user_prompt,  # type: ignore
+                    character_id=character_model.id,
+                    name=character_model.name,
+                    llm_system_prompt=character_model.system_prompt,
+                    llm_user_prompt=character_model.user_prompt,
                     source="community",
                     location="database",
-                    voice_id=character_model.voice_id,  # type: ignore
+                    voice_id=character_model.voice_id,
                     author_name=author_name,
-                    author_id=character_model.author_id,  # type: ignore
-                    visibility=character_model.visibility,  # type: ignore
-                    tts=character_model.tts,  # type: ignore
-                    data=character_model.data,  # type: ignore
-                    # rebyte config
-                    rebyte_api_project_id=character_model.rebyte_api_project_id,  # type: ignore
-                    rebyte_api_agent_id=character_model.rebyte_api_agent_id,  # type: ignore
-                    rebyte_api_version=character_model.rebyte_api_version,  # type: ignore
+                    author_id=character_model.author_id,
+                    visibility=character_model.visibility,
+                    tts=character_model.tts,
+                    data=character_model.data,
+                    rebyte_api_project_id=character_model.data.get("rebyte_api_project_id", ""),
+                    rebyte_api_agent_id=character_model.data.get("rebyte_api_agent_id", ""),
+                    rebyte_api_version=character_model.data.get("rebyte_api_version", ""),
                 )
-                self.characters[character_model.id] = character  # type: ignore
+                self.characters[character_model.id] = character
                 # TODO: load context data from storage
         logger.info(f"Loaded {len(character_models)} characters from sql database")
 
