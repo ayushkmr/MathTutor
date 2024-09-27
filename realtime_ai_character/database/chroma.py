@@ -1,8 +1,9 @@
 import os
 from dotenv import load_dotenv
 
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+# Updated imports to use the new packages
+from langchain_openai import OpenAIEmbeddings  # {{ edit_1 }}
+from langchain_chroma import Chroma  # {{ edit_2 }}
 
 from realtime_ai_character.logger import get_logger
 

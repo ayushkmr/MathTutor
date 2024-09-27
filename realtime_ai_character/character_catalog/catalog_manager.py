@@ -10,7 +10,7 @@ import yaml
 from dotenv import load_dotenv
 from firebase_admin import auth
 from langchain.text_splitter import CharacterTextSplitter
-from llama_index import SimpleDirectoryReader
+from llama_index.legacy.readers.file.base import SimpleDirectoryReader
 from readerwriterlock import rwlock
 
 from realtime_ai_character.database.chroma import get_chroma
@@ -27,30 +27,19 @@ logger = get_logger(__name__)
 class CatalogManager(Singleton):
     def __init__(self):
         super().__init__()
-        overwrite = os.getenv("OVERWRITE_CHROMA") != "false"
         # skip Chroma if Openai API key is not set
         if os.getenv("OPENAI_API_KEY"):
             self.db = get_chroma()
         else:
             self.db = get_chroma(embedding=False)
-            overwrite = False
-            logger.warning("OVERWRITE_CHROMA disabled due to OPENAI_API_KEY not set")
+            logger.warning("OPENAI_API_KEY not set, using Chroma without embedding.")
         self.sql_db = next(get_db())
         self.sql_load_interval = 30
         self.sql_load_lock = rwlock.RWLockFair()
 
-        if overwrite:
-            logger.info("Overwriting existing data in the chroma.")
-            self.db.delete_collection()
-            self.db = get_chroma()
-
         self.characters: dict[str, Character] = {}
         self.author_name_cache: dict[str, str] = {}
-        self.load_characters("default", overwrite)
-        # self.load_characters("community", overwrite)
-        if overwrite:
-            logger.info("Persisting data in the chroma.")
-            self.db.persist()
+        self.load_characters("default")
         logger.info(f"Total document load: {self.db._client.get_collection('llm').count()}")
         self.run_load_sql_db_thread = True
         self.load_sql_db_thread = threading.Thread(target=self.load_sql_db_loop)
@@ -137,14 +126,12 @@ class CatalogManager(Singleton):
         )
         self.db.add_documents(docs)
 
-    def load_characters(self, source: str, overwrite: bool):
+    def load_characters(self, source: str):
         """
         Load characters from the character_catalog directory. Use /data to create
         documents and add them to the chroma.
 
         :param source: 'default' or 'community'
-
-        :param overwrite: if True, overwrite existing data in the chroma.
         """
         if source == "default":
             path = Path(__file__).parent
@@ -159,9 +146,7 @@ class CatalogManager(Singleton):
 
         for directory in directories:
             character_name = self.load_character(directory, source)
-            if character_name and overwrite:
-                logger.info("Overwriting data for character: " + character_name)
-                self.load_data(character_name, directory / "data")
+            logger.info("Loaded character: " + character_name)
 
         logger.info(f"Loaded {len(self.characters)} characters: IDs {list(self.characters.keys())}")
 
