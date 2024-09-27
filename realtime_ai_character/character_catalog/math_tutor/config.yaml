@@ -24,6 +24,3 @@ text_to_speech_use: EDGE_TTS
 voice_id: en-US-ChristopherNeural
 visibility: public
 order: 2
-
-rebyte_api_project_id: test
-rebyte_api_agent_id: test

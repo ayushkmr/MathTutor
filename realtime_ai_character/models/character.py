@@ -25,9 +25,9 @@ class Character(Base):
     tts = Column(String(64), nullable=True)
     avatar_id = Column(String(100), nullable=True)
     background_text = Column(String(262144), nullable=True)
-    rebyte_api_project_id = Column(String(100), nullable=True)
-    rebyte_api_agent_id = Column(String(100), nullable=True)
-    rebyte_api_version = Column(Integer(), nullable=True)
+    # rebyte_api_project_id = Column(String(100), nullable=True)
+    # rebyte_api_agent_id = Column(String(100), nullable=True)
+    # rebyte_api_version = Column(Integer(), nullable=True)
 
     def to_dict(self):
         return {
@@ -52,9 +52,9 @@ class CharacterRequest(BaseModel):
     data: Optional[dict] = None
     avatar_id: Optional[str] = None
     background_text: Optional[str] = None
-    rebyte_api_project_id: Optional[str] = None
-    rebyte_api_agent_id: Optional[str] = None
-    rebyte_api_version: Optional[int] = None
+    # rebyte_api_project_id: Optional[str] = None
+    # rebyte_api_agent_id: Optional[str] = None
+    # rebyte_api_version: Optional[int] = None
 
 
 class EditCharacterRequest(BaseModel):
@@ -68,9 +68,9 @@ class EditCharacterRequest(BaseModel):
     data: Optional[dict] = None
     avatar_id: Optional[str] = None
     background_text: Optional[str] = None
-    rebyte_api_project_id: Optional[str] = None
-    rebyte_api_agent_id: Optional[str] = None
-    rebyte_api_version: Optional[int] = None
+    # rebyte_api_project_id: Optional[str] = None
+    # rebyte_api_agent_id: Optional[str] = None
+    # rebyte_api_version: Optional[int] = None
 
 
 class DeleteCharacterRequest(BaseModel):

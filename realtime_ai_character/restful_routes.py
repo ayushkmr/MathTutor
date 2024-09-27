@@ -60,7 +60,7 @@ async def characters(db: Session = Depends(get_db)):
 @router.get("/configs")
 async def configs():
     return {
-        "llms": ["gpt-4", "gpt-3.5-turbo-16k", "claude-2", "meta-llama/Llama-2-70b-chat-hf"],
+        "llms": ["gpt-4o"],
     }
 
 @router.get("/session_history")
