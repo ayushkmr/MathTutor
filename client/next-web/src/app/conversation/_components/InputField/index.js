@@ -67,6 +67,7 @@ export default function InputField() {
             placeholder='Your turn'
             fontSize={16}
             fontFamily=''
+            className="text-black"
           />
         </div>
         <div className='flex flex-row justify-between items-center'>
@@ -113,7 +114,7 @@ export default function InputField() {
               aria-label='send'
               size='md'
               isDisabled={text === ''}
-              className='bg-real-blue-500 px-2 min-w-fit sm:min-w-16 sm:px-4 md:flex h-9 disabled:bg-transparent'
+              className='bg-real-blue-500 px-2 min-w-fit sm:min-w-16 sm:px-4 md:flex h-9 primary-bg disabled:primary-bg/50'
               onPress={handleOnEnter}
             >
               <IoIosSend size='2em' />

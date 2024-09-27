@@ -20,6 +20,7 @@ import { playAudios } from '@/util/audioUtils';
 import JournalMode from './_components/JournalMode';
 import InputField from "@/app/conversation/_components/InputField";
 import microphoneSVG from '@/assets/svgs/microphone.svg';
+import microphoneSVGWhite from '@/assets/svgs/microphone-white.svg';
 
 
 export default function Conversation() {
@@ -235,7 +236,7 @@ export default function Conversation() {
               type="audio/mp3"
           />
         </audio>
-        <div className="fixed top-0 w-full bg-background z-10">
+        <div className="fixed top-0 w-full bg-purple-100 z-10">
           <div className="flex justify-between mt-4 md:mt-5 pt-2 md:pt-4 gap-5 items-center float-left">
             <div>
               <Tooltip
@@ -246,7 +247,7 @@ export default function Conversation() {
                     isBlock
                     isIconOnly
                     radius="full"
-                    className="hover:opacity-80 h-8 w-8 md:h-12 md:w-12 ml-5 mt-1 bg-button"
+                    className="hover:opacity-80 h-8 w-8 md:h-12 md:w-12 ml-5 mt-1 primary-bg"
                     onPress={() => {
                       router.push('/');
                       cleanUpStates();
@@ -308,23 +309,23 @@ export default function Conversation() {
           </div>
           <div className="h-24"></div>
         </div>
-        <div className="fixed bottom-0 w-full bg-background">
+        <div className="fixed bottom-0 w-full bg-white">
           <div className="px-4 md:px-0 mx-auto md:w-unit-9xl lg:w-[892px]">
             <HandsFreeMode isDisplay={!isTextMode}/>
             <section className={`flex gap-6 items-center mb-2`}>
               <div
-                  className="border-x-[1px] border-t-[1px] md:border-b-[1px] rounded-lg border-white/30 -mx-4 md:mx-0 relative flex-grow"
+                  className="border-x-[1px] border-t-[1px] md:border-b-[1px] rounded-lg border-black/30 -mx-4 md:mx-0 relative flex-grow"
                   onClick={textMode}
               >
                 <InputField/>
               </div>
               <div
-                  className={`flex items-center justify-center w-16 h-16 rounded-full cursor-pointer ${isTextMode ? 'bg-transparent': 'bg-red-500'}`}
+                  className={`flex items-center justify-center w-16 h-16 rounded-full cursor-pointer ${isTextMode ? 'bg-transparent': 'bg-red-500 primary-text'}`}
                   onClick={toggleTextMode}
               >
                 <Image
                     priority
-                    src={microphoneSVG}
+                    src={isTextMode ? microphoneSVG : microphoneSVGWhite}
                     alt="microphone"
                     className="w-8 h-8"
                 />

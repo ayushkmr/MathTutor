@@ -9,9 +9,9 @@ export default function TabButton({
 }) {
   let styles;
   if (isSelected) {
-    styles = "bg-tab";
+    styles = "bg-tab primary-bg";
   } else {
-    styles = "bg-transparent";
+    styles = "bg-transparent primary-text";
   }
   return (
     <Button

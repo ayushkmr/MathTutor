@@ -18,7 +18,7 @@ export default function HandsFreeMode({
             initial={{opacity: 0}}
             animate={{opacity: 1}}
             exit={{opacity: 0}}
-            className="font-light sm:text-lg text-center py-5"
+            className="font-light text-black sm:text-lg text-center py-5"
           >
               {speechInterim?  speechInterim: 'Listening...'}
           </motion.div>

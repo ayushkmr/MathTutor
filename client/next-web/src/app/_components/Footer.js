@@ -37,7 +37,7 @@ export default function Footer() {
       {/*    <FaTwitter size={24} />*/}
       {/*  </Link>*/}
       {/*</div>*/}
-      <p className='copyright text-xs text-center my-7'>
+      <p className='copyright text-xs text-center my-7 text-black'>
         Copyright © 2024 XScope. All rights reserved. Any statements are
         fictional and don&apos;t represent actual beliefs or opinions.
       </p>

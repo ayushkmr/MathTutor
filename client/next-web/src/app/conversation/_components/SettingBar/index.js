@@ -18,7 +18,7 @@ export default function SettingBar({
   const { character } = useAppStore();
 
   return (
-      <div className={`flex flex-row px-4 justify-between`}>
+      <div className={`flex flex-row px-4 justify-between text-black`}>
           <div className="flex gap-1 items-center">
               <Avatar
                   name={character.name}

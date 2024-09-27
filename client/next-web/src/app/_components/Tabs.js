@@ -14,8 +14,7 @@ export default function Tabs({ characters }) {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-
-    const tab = searchParams.get('tab');
+    const tab = searchParams.get('tab') || 'topics';
     if (tab) {
       setTabNow(tab);
     }
@@ -29,7 +28,7 @@ export default function Tabs({ characters }) {
   return (
     <>
       <div className='flex flex-row justify-center mt-10'>
-        <div className='w-[630px] flex gap-5 border-2 rounded-full p-1 border-tab'>
+        <div className='w-[630px] flex gap-5 border-2 rounded-full p-1 border-tab primary-text'>
           <TabButton isSelected={tabNow === 'topics'} handlePress={() => setTabNow('topics')}>
             Topics
           </TabButton>

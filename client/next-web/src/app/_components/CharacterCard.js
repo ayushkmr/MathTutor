@@ -24,23 +24,23 @@ export default function CharacterCard({
   }
 
   return (
-    <Card className="p-2.5">
+    <Card className="p-2.5 bg-white">
         <CardBody className="p-0 text-center flex-row gap-2 md:flex-col">
-          <iframe width="500" height="300" src="https://www.youtube.com/embed/NVhA7avdTAw"
+          <iframe width="500" height="300" src="https://www.youtube.com/embed/NVhA7avdTAw?rel=0"
                   title="Introduction to multiplication" frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                  referrerPolicy="strict-origin-when-cross-origin" className="rounded-xl" allowFullScreen></iframe>
         </CardBody>
         <CardFooter className="mt-2">
             <Button
-                className="w-full font-light bg-default/40 hover:opacity-80"
+                className="w-full primary-bg font-light hover:opacity-80"
                 onPress={() => {
                     const compressedCharacter = lz.compressToEncodedURIComponent(
                         JSON.stringify(character)
                     );
                     router.push(`/conversation?character=${compressedCharacter}`);
-          }}
-        >Let&apos;s Practice</Button>
+                }}
+            >Let&apos;s Practice!</Button>
       </CardFooter>
     </Card>
   );

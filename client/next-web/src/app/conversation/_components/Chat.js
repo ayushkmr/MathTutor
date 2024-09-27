@@ -28,26 +28,26 @@ export default function Chat() {
                 key={line.hasOwnProperty('timestamp') ? line.timestamp: 0}
                 className="flex flex-col md:flex-row self-start items-start md:items-stretch"
               >
-                <p className={"w-fit max-w-[450px] py-2 px-5 font-light flex-none rounded-3xl md:mr-3 rounded-bl-none bg-real-blue-500/20 whitespace-pre-wrap"}>{line.content}</p>
-                <div><Button
-                  isIconOnly
-                  aria-label="thumb up"
-                  radius="full"
-                  variant="light"
-                  className="text-white/50 hover:text-white hover:bg-button min-w-fit md:min-w-10 md:h-10"
-                >
-                  <RiThumbUpLine size="1.5em"/>
-                </Button>
-                <Button
-                  isIconOnly
-                  aria-label="thumb down"
-                  radius="full"
-                  variant="light"
-                  className="text-white/50 hover:text-white hover:bg-button min-w-fit md:min-w-10 md:h-10"
-                >
-                  <RiThumbDownLine size="1.5em"/>
-                </Button>
-                </div>
+                <p className={"w-fit max-w-[450px] py-2 px-5 font-light flex-none rounded-3xl md:mr-3 rounded-bl-none primary-bg whitespace-pre-wrap"}>{line.content}</p>
+                {/*<div><Button*/}
+                {/*  isIconOnly*/}
+                {/*  aria-label="thumb up"*/}
+                {/*  radius="full"*/}
+                {/*  variant="light"*/}
+                {/*  className="text-black hover:text-white hover:bg-button min-w-fit md:min-w-10 md:h-10"*/}
+                {/*>*/}
+                {/*  <RiThumbUpLine size="1.5em"/>*/}
+                {/*</Button>*/}
+                {/*<Button*/}
+                {/*  isIconOnly*/}
+                {/*  aria-label="thumb down"*/}
+                {/*  radius="full"*/}
+                {/*  variant="light"*/}
+                {/*  className="text-black hover:text-white hover:bg-button min-w-fit md:min-w-10 md:h-10"*/}
+                {/*>*/}
+                {/*  <RiThumbDownLine size="1.5em"/>*/}
+                {/*</Button>*/}
+                {/*</div>*/}
               </div>
             );
           } else if (line && line.hasOwnProperty('from') && line.from === 'user') {
@@ -56,7 +56,7 @@ export default function Chat() {
                 key={line.timestamp}
                 className="self-end"
               >
-                <p className={"w-fit max-w-[450px] py-2 px-5 font-light flex-none rounded-3xl rounded-br-none bg-real-blue-500/50 whitespace-pre-wrap"}>{line.content}</p>
+                <p className={"w-fit max-w-[450px] py-2 px-5 font-light flex-none rounded-3xl rounded-br-none primary-bg whitespace-pre-wrap"}>{line.content}</p>
               </div>
             )
           } else if (line && line.hasOwnProperty('from') && line.from === 'message') {
