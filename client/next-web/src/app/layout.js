@@ -9,15 +9,15 @@ const prompt = Prompt({
 });
 
 export const metadata = {
-  title: 'RealChar.',
+  title: 'Math Tutor',
   description:
-    'Create, customize and talk to your AI Character/Companion in realtime',
+    'Create, customize and talk to your AI Character/Companion in realtime', // TODO: update this
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang='en' className='dark'>
-      <body className={prompt.className}>
+      <body className={prompt.className + ' h-full'}>
         <Providers>
           <main>{children}</main>
         </Providers>

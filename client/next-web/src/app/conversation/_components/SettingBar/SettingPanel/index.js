@@ -8,10 +8,10 @@ export default function SettingPanel() {
         <header className="pb-5">Preferred Language</header>
         <LanguagePanel />
       </section>
-      <section>
-        <header className="pb-5">Advanced options</header>
-        <EnhancePanel />
-      </section>
+      {/*<section>*/}
+      {/*  <header className="pb-5">Advanced options</header>*/}
+      {/*  <EnhancePanel />*/}
+      {/*</section>*/}
     </div>
   );
 }

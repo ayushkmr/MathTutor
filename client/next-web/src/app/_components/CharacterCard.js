@@ -25,47 +25,22 @@ export default function CharacterCard({
 
   return (
     <Card className="p-2.5">
-      <CardBody className="p-0 text-center flex-row gap-2 md:flex-col">
-        <Avatar
-          radius="sm"
-          src={character.image_url}
-          className="w-20 h-20 md:w-44 md:h-44 md:mx-auto mt-2"
-        />
-        <div className="grow md:ml-0">
-          <p className="name text-base text-center h-12 flex flex-row justify-center items-center"><span>{character.name}</span></p>
-          <div className="flex justify-center mt-1 relative h-10">
-            <Image
-              src={audioSvg}
-              alt=""
-              className="w-auto"
-            />
+        <CardBody className="p-0 text-center flex-row gap-2 md:flex-col">
+          <iframe width="500" height="300" src="https://www.youtube.com/embed/NVhA7avdTAw"
+                  title="Introduction to multiplication" frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        </CardBody>
+        <CardFooter className="mt-2">
             <Button
-              isIconOnly
-              variant="bordered"
-              radius="full"
-              color="white"
-              className="opacity-70 absolute hover:opacity-80 hover:scale-105 hover:-translate-y-0.5 transform transition-transform"
-              onPress={handlePress}
-            >
-            {!isPlaying ? (
-              <FaPlay/>
-            ) : (
-              <FaStop/>
-            )}
-            </Button>
-          </div>
-        </div>
-      </CardBody>
-      <CardFooter className="mt-5">
-        <Button
-          className="w-full font-light bg-default/40 hover:opacity-80"
-          onPress={() => {
-            const compressedCharacter = lz.compressToEncodedURIComponent(
-              JSON.stringify(character)
-            );
-            router.push(`/conversation?character=${compressedCharacter}`);
+                className="w-full font-light bg-default/40 hover:opacity-80"
+                onPress={() => {
+                    const compressedCharacter = lz.compressToEncodedURIComponent(
+                        JSON.stringify(character)
+                    );
+                    router.push(`/conversation?character=${compressedCharacter}`);
           }}
-        >Chat with me</Button>
+        >Let&apos;s Practice</Button>
       </CardFooter>
     </Card>
   );

@@ -5,7 +5,7 @@ export async function getCharacters() {
     const res = await fetch(`${host}/characters`, { next: { revalidate: 5 } });
     const characters = await res.json();
     console.log('getCharacters: got ' + characters.length + ' characters');
-    return characters;
+    return characters.filter(chars => chars.character_id === 'annie');
   } catch (err) {
     console.log('getCharacters - Error: ' + err);
     return [];

@@ -56,7 +56,7 @@ export default function InputField() {
   }
 
   return (
-    <div className='flex justify-center md:mx-auto md:w-unit-9xl lg:w-[892px]'>
+    <div className='flex justify-center md:mx-auto flex-grow'>
       <div className='flex md:hidden flex-col justify-center w-full pb-1'>
         <div className='mobile_conversation'>
           <InputEmoji

@@ -14,44 +14,39 @@ export default function Tabs({ characters }) {
   const searchParams = useSearchParams();
 
   useEffect(() => {
+
     const tab = searchParams.get('tab');
     if (tab) {
       setTabNow(tab);
     }
+
   }, []);
 
   function charactersShown(tab) {
-    if (tab === 'explore') {
-      return characters.filter((character) => character.source === 'default');
-    } else if (tab === 'community') {
-      return characters.filter((character) => character.source === 'community');
-    }
+    return characters;
   }
 
   return (
     <>
       <div className='flex flex-row justify-center mt-10'>
-        <div className='w-[630px] grid grid-cols-3 gap-5 border-2 rounded-full p-1 border-tab'>
-          <TabButton isSelected={tabNow === 'explore'} handlePress={() => setTabNow('explore')}>
-            Explore
-          </TabButton>
-          <TabButton isSelected={tabNow === 'community'} handlePress={() => setTabNow('community')}>
-            Community
+        <div className='w-[630px] flex gap-5 border-2 rounded-full p-1 border-tab'>
+          <TabButton isSelected={tabNow === 'topics'} handlePress={() => setTabNow('topics')}>
+            Topics
           </TabButton>
           <TabButton
-            isSelected={user && tabNow === 'myCharacters'}
+            isSelected={user && tabNow === 'fav'}
             isDisabled={user == null}
-            handlePress={() => setTabNow('myCharacters')}
+            handlePress={() => setTabNow('fav')}
           >
-            My Characters
+            Favourites
           </TabButton>
         </div>
       </div>
       <ExploreTab
         characters={charactersShown(tabNow)}
-        isDisplay={tabNow === 'explore' || tabNow === 'community'}
+        isDisplay={tabNow !== 'fav'}
       />
-      {user && <MyTab isDisplay={tabNow === 'myCharacters'} />}
+      {user && <MyTab isDisplay={tabNow === 'fav'} />}
     </>
   );
 }

@@ -71,78 +71,78 @@ export default function HamburgerMenu() {
       >
         <section className="p-6 pt-20">
           <header className="text-lg my-3">System settings</header>
-          <section>
-            <header className="text-sm font-light my-3">Large language model(LLM)</header>
-            {user == null ? (
-              <Select
-                labelPlacement="outside"
-                aria-label="model select"
-                selectedKeys={selectedModel}
-                disabledKeys={['locked', models[0].id]}
-                onChange={handleModelChange}
-                radius="sm"
-                classNames={{
-                  base: 'w-full',
-                  trigger: 'bg-white/10 data-[hover=true]:bg-white/20',
-                  value: 'font-light pl-4 text-base',
-                  popover: 'bg-dropdown',
-                }}
-              >
-                <SelectSection>
-                  <SelectItem key={models[0].id} textValue={models[0].name}
-                    classNames={{
-                      base: 'data-[hover=true]:bg-default/40 data-[selectable=true]:focus:bg-default/40'
-                    }}
-                  >
-                    <div className="font-light flex flex-col">
-                      <span>{models[0].name}</span>
-                      <span className="text-tiny whitespace-normal text-white/50">{models[0].tooltip}</span>
-                    </div>
-                  </SelectItem>
-                </SelectSection>
-                <SelectSection>
-                  <SelectItem
-                    key="locked"
-                    classNames={{
-                      selectedIcon: 'hidden'
-                    }}
-                  >
-                    <span className="text-small flex flex-row items-center gap-1"><BiSolidLockAlt />Sign in needed</span>
-                  </SelectItem>
-                </SelectSection>
-              </Select>
-            ) : (
-              <Select
-                labelPlacement="outside"
-                aria-label="model select"
-                selectedKeys={selectedModel}
-                onChange={handleModelChange}
-                radius="sm"
-                classNames={{
-                  base: 'w-full',
-                  trigger: 'bg-white/10 data-[hover=true]:bg-white/20',
-                  value: 'font-light pl-4 text-base',
-                  popover: 'bg-dropdown',
-                }}
-              >
-                <SelectSection>
-                {models.map((item) => (
-                  <SelectItem key={item.id} textValue={item.name}
-                    classNames={{
-                      base: 'data-[hover=true]:bg-default/40 data-[selectable=true]:focus:bg-default/40 data-[selected=true]:pointer-events-none'
-                    }}
-                  >
-                    <div className="font-light flex flex-col">
-                      <span>{item.name}</span>
-                      <span className="text-tiny whitespace-normal text-white/50">{item.tooltip}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-                </SelectSection>
-              </Select>
-            )}
+          {/*<section>*/}
+          {/*  <header className="text-sm font-light my-3">Large language model(LLM)</header>*/}
+          {/*  {user == null ? (*/}
+          {/*    <Select*/}
+          {/*      labelPlacement="outside"*/}
+          {/*      aria-label="model select"*/}
+          {/*      selectedKeys={selectedModel}*/}
+          {/*      disabledKeys={['locked', models[0].id]}*/}
+          {/*      onChange={handleModelChange}*/}
+          {/*      radius="sm"*/}
+          {/*      classNames={{*/}
+          {/*        base: 'w-full',*/}
+          {/*        trigger: 'bg-white/10 data-[hover=true]:bg-white/20',*/}
+          {/*        value: 'font-light pl-4 text-base',*/}
+          {/*        popover: 'bg-dropdown',*/}
+          {/*      }}*/}
+          {/*    >*/}
+          {/*      <SelectSection>*/}
+          {/*        <SelectItem key={models[0].id} textValue={models[0].name}*/}
+          {/*          classNames={{*/}
+          {/*            base: 'data-[hover=true]:bg-default/40 data-[selectable=true]:focus:bg-default/40'*/}
+          {/*          }}*/}
+          {/*        >*/}
+          {/*          <div className="font-light flex flex-col">*/}
+          {/*            <span>{models[0].name}</span>*/}
+          {/*            <span className="text-tiny whitespace-normal text-white/50">{models[0].tooltip}</span>*/}
+          {/*          </div>*/}
+          {/*        </SelectItem>*/}
+          {/*      </SelectSection>*/}
+          {/*      <SelectSection>*/}
+          {/*        <SelectItem*/}
+          {/*          key="locked"*/}
+          {/*          classNames={{*/}
+          {/*            selectedIcon: 'hidden'*/}
+          {/*          }}*/}
+          {/*        >*/}
+          {/*          <span className="text-small flex flex-row items-center gap-1"><BiSolidLockAlt />Sign in needed</span>*/}
+          {/*        </SelectItem>*/}
+          {/*      </SelectSection>*/}
+          {/*    </Select>*/}
+          {/*  ) : (*/}
+          {/*    <Select*/}
+          {/*      labelPlacement="outside"*/}
+          {/*      aria-label="model select"*/}
+          {/*      selectedKeys={selectedModel}*/}
+          {/*      onChange={handleModelChange}*/}
+          {/*      radius="sm"*/}
+          {/*      classNames={{*/}
+          {/*        base: 'w-full',*/}
+          {/*        trigger: 'bg-white/10 data-[hover=true]:bg-white/20',*/}
+          {/*        value: 'font-light pl-4 text-base',*/}
+          {/*        popover: 'bg-dropdown',*/}
+          {/*      }}*/}
+          {/*    >*/}
+          {/*      <SelectSection>*/}
+          {/*      {models.map((item) => (*/}
+          {/*        <SelectItem key={item.id} textValue={item.name}*/}
+          {/*          classNames={{*/}
+          {/*            base: 'data-[hover=true]:bg-default/40 data-[selectable=true]:focus:bg-default/40 data-[selected=true]:pointer-events-none'*/}
+          {/*          }}*/}
+          {/*        >*/}
+          {/*          <div className="font-light flex flex-col">*/}
+          {/*            <span>{item.name}</span>*/}
+          {/*            <span className="text-tiny whitespace-normal text-white/50">{item.tooltip}</span>*/}
+          {/*          </div>*/}
+          {/*        </SelectItem>*/}
+          {/*      ))}*/}
+          {/*      </SelectSection>*/}
+          {/*    </Select>*/}
+          {/*  )}*/}
 
-          </section>
+          {/*</section>*/}
           <section>
             <header className="text-sm font-light my-3">Preferred language</header>
             <Select
@@ -170,18 +170,18 @@ export default function HamburgerMenu() {
               </SelectSection>
             </Select>
           </section>
-          <section>
-            <header className="text-sm font-light my-3">Advanced options</header>
-            <div className="flex flex-row gap-4 justify-between my-3">
-              <p>Journal Mode</p>
-              <Switch
-                size="sm"
-                isSelected={isJournalMode}
-                onValueChange={setIsJournalMode}
-                aria-label="journal mode"
-              />
-            </div>
-          </section>
+          {/*<section>*/}
+          {/*  <header className="text-sm font-light my-3">Advanced options</header>*/}
+          {/*  <div className="flex flex-row gap-4 justify-between my-3">*/}
+          {/*    <p>Journal Mode</p>*/}
+          {/*    <Switch*/}
+          {/*      size="sm"*/}
+          {/*      isSelected={isJournalMode}*/}
+          {/*      onValueChange={setIsJournalMode}*/}
+          {/*      aria-label="journal mode"*/}
+          {/*    />*/}
+          {/*  </div>*/}
+          {/*</section>*/}
         </section>
       </motion.div>
     </motion.aside>

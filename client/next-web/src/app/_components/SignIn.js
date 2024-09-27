@@ -10,5 +10,5 @@ export default function SignIn() {
     }
   }
 
-  return <Button onClick={handleSignIn} className="bg-default/50">Sign in</Button>;
+  return <Button onClick={handleSignIn} className="primary-bg">Sign in</Button>;
 }

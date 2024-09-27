@@ -1,10 +1,10 @@
 export const createSettingSlice = (set, get) => ({
   character: {},
-  preferredLanguage: new Set(['Auto Detect']),
+  preferredLanguage: new Set(['English']),
   selectedSpeaker: new Set(['default']),
   selectedMicrophone: new Set(['default']),
-  selectedModel: new Set(['rebyte']),
-  isMute: false,
+  selectedModel: new Set(['rebyte']), // TODO: switch to Chat GPT
+  isMute: false, // TODO: Change it to false
   disableMic: false,
   isJournalMode: false,
   languageList: [

@@ -6,6 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary-color: #875df6;
+  background: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,4 +60,12 @@
 
 .conversation_container .react-emoji-picker--wrapper {
   left: 0;
+}
+
+.primary-text {
+  color: var(--primary-color);
+}
+
+.primary-bg {
+  background: var(--primary-color);
 }

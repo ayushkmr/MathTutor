@@ -19,7 +19,7 @@ export default function Chat() {
   }, [chatContent])
 
   return (
-    <div className={`flex flex-col gap-5 overflow-y-scroll min-h-25`}>
+    <div className={`flex flex-col gap-5 min-h-25`}>
       {
         [...chatContent, interimChat].map((line) => {
           if (line && line.hasOwnProperty('from') && line.from === 'character') {

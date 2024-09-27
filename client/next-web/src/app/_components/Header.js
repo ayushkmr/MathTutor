@@ -17,16 +17,14 @@ export default function Header() {
   const { user } = useAuthContext();
 
   return (
-    <Navbar className='h-20 bg-header'>
+    <Navbar className='h-20 bg-header bg-purple-50 '>
       <div className="flex items-end"> {/* Align items to the bottom */}
         <NavbarBrand>
-          <Link href='/'>
-            <Image priority src={logo} alt='RealChar.ai' className="block" />
+          <Link href='/' className="primary-text font-bold text-lg">
+            {/*<Image priority src={logo} alt='RealChar.ai' className="block" />*/}
+            MathCamps
           </Link>
         </NavbarBrand>
-        <span className="ml-2 flex items-end text-sm"> {/* Space after the image */}
-          powered by&nbsp;<a href="https://rebyte.ai/" className="text-base"> ReByte.ai</a>
-        </span>
       </div>
       <NavbarContent justify='end' className="h-full flex items-center">
         <NavbarItem>

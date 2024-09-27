@@ -18,6 +18,9 @@ import { useAppStore } from '@/zustand/store';
 import lz from 'lz-string';
 import { playAudios } from '@/util/audioUtils';
 import JournalMode from './_components/JournalMode';
+import InputField from "@/app/conversation/_components/InputField";
+import microphoneSVG from '@/assets/svgs/microphone.svg';
+
 
 export default function Conversation() {
   const router = useRouter();
@@ -173,8 +176,16 @@ export default function Conversation() {
   }
 
   function textMode() {
+    if (isTextMode) return;
     setIsTextMode(true);
     disableVAD();
+  }
+
+  function toggleTextMode() {
+    if (isTextMode && !disableMic) enableVAD();
+    else disableVAD();
+    setIsTextMode(!isTextMode);
+
   }
 
   function toggleMute() {
@@ -214,26 +225,24 @@ export default function Conversation() {
   }, [isJournalMode]);
 
   return (
-    <div className="relative h-screen conversation_container">
-      <audio
-        ref={audioPlayerRef}
-        className="audio-player"
-      >
-        <source
-          src=""
-          type="audio/mp3"
-        />
-      </audio>
-      {!isJournalMode ? (
-        <>
-          <div className="fixed top-0 w-full bg-background z-10">
-            <div className="grid grid-cols-4 gap-5 pt-4 md:pt-5 items-center">
-              <div>
-                <Tooltip
+      <div className="relative h-screen conversation_container">
+        <audio
+            ref={audioPlayerRef}
+            className="audio-player"
+        >
+          <source
+              src=""
+              type="audio/mp3"
+          />
+        </audio>
+        <div className="fixed top-0 w-full bg-background z-10">
+          <div className="flex justify-between mt-4 md:mt-5 pt-2 md:pt-4 gap-5 items-center float-left">
+            <div>
+              <Tooltip
                   content="Exit"
                   placement="bottom"
-                >
-                  <Button
+              >
+                <Button
                     isBlock
                     isIconOnly
                     radius="full"
@@ -242,72 +251,88 @@ export default function Conversation() {
                       router.push('/');
                       cleanUpStates();
                     }}
-                  >
-                    <Image
+                >
+                  <Image
                       priority
                       src={exitIcon}
                       alt="exit"
-                    />
-                  </Button>
-                </Tooltip>
-              </div>
-              <div className="col-span-2 flex gap-5 border-2 rounded-full p-1 border-tab">
-                <TabButton
-                  isSelected={isTextMode}
-                  handlePress={textMode}
-                  className="min-w-fit h-fit py-2 md:min-w-20 md:h-11 md:py-4"
-                >
-                  <span className="md:hidden">
-                    <BsChatRightText size="1.2em" />
-                  </span>
-                  <span className="hidden md:inline">Text</span>
-                  <span className="hidden lg:inline">&nbsp;mode</span>
-                </TabButton>
-                <TabButton
-                  isSelected={!isTextMode}
-                  handlePress={handsFreeMode}
-                  className="min-w-fit h-fit py-2 md:min-w-20 md:h-11 md:py-4"
-                >
-                  <span className="md:hidden">
-                    <BsTelephone size="1.2em" />
-                  </span>
-                  <span className="hidden md:inline">Hands-free</span>
-                  <span className="hidden lg:inline">&nbsp;mode</span>
-                </TabButton>
-              </div>
-              <div className="flex flex-row justify-self-end md:hidden">
-                <ShareButton />
-                <HamburgerMenu />
-              </div>
+                  />
+                </Button>
+              </Tooltip>
             </div>
-            <div className="flex flex-col mt-4 md:mt-5 pt-2 md:pt-5 pb-5 border-t-2 border-divider md:mx-auto md:w-unit-9xl lg:w-[892px]">
-              <SettingBar
+            {/*<div className="col-span-2 flex gap-5 border-2 rounded-full p-1 border-tab">*/}
+            {/*  <TabButton*/}
+            {/*      isSelected={isTextMode}*/}
+            {/*      handlePress={textMode}*/}
+            {/*      className="min-w-fit h-fit py-2 md:min-w-20 md:h-11 md:py-4"*/}
+            {/*  >*/}
+            {/*      <span className="md:hidden">*/}
+            {/*        <BsChatRightText size="1.2em"/>*/}
+            {/*      </span>*/}
+            {/*    <span className="hidden md:inline">Text</span>*/}
+            {/*    <span className="hidden lg:inline">&nbsp;mode</span>*/}
+            {/*  </TabButton>*/}
+            {/*  <TabButton*/}
+            {/*      isSelected={!isTextMode}*/}
+            {/*      handlePress={handsFreeMode}*/}
+            {/*      className="min-w-fit h-fit py-2 md:min-w-20 md:h-11 md:py-4"*/}
+            {/*  >*/}
+            {/*      <span className="md:hidden">*/}
+            {/*        <BsTelephone size="1.2em"/>*/}
+            {/*      </span>*/}
+            {/*    <span className="hidden md:inline">Hands-free</span>*/}
+            {/*    <span className="hidden lg:inline">&nbsp;mode</span>*/}
+            {/*  </TabButton>*/}
+            {/*</div>*/}
+            {/*<div className="flex flex-row justify-self-end md:hidden">*/}
+            {/*  /!*<ShareButton/>*!/*/}
+            {/*  <HamburgerMenu/>*/}
+            {/*</div>*/}
+          </div>
+          <div
+              className="flex flex-col mt-4 md:mt-5 pt-2 md:pt-5 pb-5 md:mx-auto md:w-unit-9xl lg:w-[892px]">
+            <SettingBar
                 isTextMode={isTextMode}
                 isMute={isMute}
                 toggleMute={toggleMute}
                 disableMic={disableMic}
                 handleMic={handleMic}
-              />
-            </div>
+            />
           </div>
-          <div className="h-full -mb-24">
-            <div className="h-[154px] md:h-[178px]"></div>
-            {!isTextMode && <div className="h-[250px] md:h-[288px]"></div>}
-            <div className="w-full px-4 md:px-0 mx-auto md:w-unit-9xl lg:w-[892px]">
-              <Chat />
-            </div>
-            <div className="h-24"></div>
+        </div>
+        <div className="h-full -mb-24">
+          <div className="h-[154px] md:h-[178px]"></div>
+          {/*{!isTextMode && <div className="h-[250px] md:h-[288px]"></div>}*/}
+          <div className="w-full px-4 md:px-0 mx-auto md:w-unit-9xl lg:w-[892px]">
+            <Chat/>
           </div>
-          <div className="fixed bottom-0 w-full bg-background">
-            <div className="px-4 md:px-0 mx-auto md:w-unit-9xl lg:w-[892px]">
-              <HandsFreeMode isDisplay={!isTextMode} />
-              <TextMode isDisplay={isTextMode} />
-            </div>
+          <div className="h-24"></div>
+        </div>
+        <div className="fixed bottom-0 w-full bg-background">
+          <div className="px-4 md:px-0 mx-auto md:w-unit-9xl lg:w-[892px]">
+            <HandsFreeMode isDisplay={!isTextMode}/>
+            <section className={`flex gap-6 items-center mb-2`}>
+              <div
+                  className="border-x-[1px] border-t-[1px] md:border-b-[1px] rounded-lg border-white/30 -mx-4 md:mx-0 relative flex-grow"
+                  onClick={textMode}
+              >
+                <InputField/>
+              </div>
+              <div
+                  className={`flex items-center justify-center w-16 h-16 rounded-full cursor-pointer ${isTextMode ? 'bg-transparent': 'bg-red-500'}`}
+                  onClick={toggleTextMode}
+              >
+                <Image
+                    priority
+                    src={microphoneSVG}
+                    alt="microphone"
+                    className="w-8 h-8"
+                />
+              </div>
+            </section>
           </div>
-        </>
-      ) : (
-        <JournalMode />
-      )}
-    </div>
+        </div>
+        {/*<JournalMode/>*/}
+      </div>
   );
 }
