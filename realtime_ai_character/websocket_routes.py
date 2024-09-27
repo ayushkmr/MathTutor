@@ -234,7 +234,7 @@ async def handle_receive(
                 character_id = character_id_list[selection - 1]
 
         if character.tts:
-            text_to_speech = get_text_to_speech(character.tts)
+            text_to_speech = get_text_to_speech("OPENAI_TTS")
         else:
             text_to_speech = default_text_to_speech
 

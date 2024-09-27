@@ -30,7 +30,7 @@ app.include_router(twilio_router)
 # initializations
 CatalogManager.initialize()
 ConnectionManager.initialize()
-get_text_to_speech()
+get_text_to_speech("OPENAI_TTS")
 get_speech_to_text()
 
 # suppress deprecation warnings

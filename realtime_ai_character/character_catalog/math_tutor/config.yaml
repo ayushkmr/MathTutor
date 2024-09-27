@@ -19,8 +19,9 @@ user: |
   ---
   {query}
 
-text_to_speech_use: EDGE_TTS
+text_to_speech_use: OPENAI_TTS
+tts: OPENAI_TTS
 
-voice_id: en-US-ChristopherNeural
+voice_id: shimmer
 visibility: public
 order: 2

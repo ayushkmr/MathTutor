@@ -46,11 +46,11 @@ async def characters(db: Session = Depends(get_db)):
             "character_id": character.id,
             "name": character.name,
             "source": "database",
-            "voice_id": character.voice_id,
+            "voice_id": "shimmer",
             "author_id": character.author_id,
             "audio_url": "https://www.youtube.com/embed/NVhA7avdTAw?rel=0",
             "image_url": "https://www.youtube.com/embed/NVhA7avdTAw?rel=0",
-            "tts": character.tts,
+            "tts": "OPENAI_TTS",
             "is_author": True,  # Assuming all characters belong to the user for simplicity
             "location": "database",
         }
