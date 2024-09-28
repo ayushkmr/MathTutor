@@ -206,6 +206,13 @@ def timed(func):
 
 
 def task_done_callback(task: asyncio.Task):
-    exception = task.exception()
+    if task.cancelled():
+        logger.error(f"Task {task.get_name()} was cancelled")
+        return
+    try:
+        exception = task.exception()
+    except asyncio.CancelledError:
+        logger.error(f"Task {task.get_name()} was cancelled during exception retrieval")
+        return
     if exception:
         logger.error(f"Error in task {task.get_name()}: {exception}")

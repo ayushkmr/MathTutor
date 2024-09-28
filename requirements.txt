@@ -179,6 +179,7 @@ sympy==1.13.3
 tenacity==8.5.0
 tiktoken==0.7.0
 tokenizers==0.20.0
+torch==2.4.1
 tqdm==4.66.5
 twilio==9.3.2
 typer==0.12.5
