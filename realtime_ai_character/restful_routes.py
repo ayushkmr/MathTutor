@@ -18,7 +18,6 @@ from realtime_ai_character.llm.highlight_action_generator import (
     generate_highlight_action,
     generate_highlight_based_on_prompt,
 )
-from realtime_ai_character.llm.system_prompt_generator import generate_system_prompt
 from realtime_ai_character.models.interaction import Interaction
 from realtime_ai_character.models.feedback import Feedback, FeedbackRequest
 from realtime_ai_character.models.character import (
@@ -235,17 +234,17 @@ async def delete_character(
 
 #     return response.json()
 
-@router.post("/system_prompt")
-async def system_prompt(request: GeneratePromptRequest):
-    """Generate System Prompt according to name and background."""
-    name = request.name
-    background = request.background
-    if not isinstance(name, str) or name == "":
-        raise HTTPException(
-            status_code=http_status.HTTP_400_BAD_REQUEST,
-            detail="Name is empty",
-        )
-    return {"system_prompt": await generate_system_prompt(name, background)}
+# @router.post("/system_prompt")
+# async def system_prompt(request: GeneratePromptRequest):
+#     """Generate System Prompt according to name and background."""
+#     name = request.name
+#     background = request.background
+#     if not isinstance(name, str) or name == "":
+#         raise HTTPException(
+#             status_code=http_status.HTTP_400_BAD_REQUEST,
+#             detail="Name is empty",
+#         )
+#     return {"system_prompt": await generate_system_prompt(name, background)}
 
 @router.get("/conversations", response_model=list[dict])
 async def get_recent_conversations(db: Session = Depends(get_db)):

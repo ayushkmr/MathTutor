@@ -158,8 +158,6 @@ python-multipart==0.0.10
 pytz==2024.2
 PyYAML==6.0.2
 readerwriterlock==1.0.9
-rebyte==0.0.6
-rebyte_langchain==0.0.12
 regex==2024.9.11
 requests==2.32.3
 requests-oauthlib==2.0.0

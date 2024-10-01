@@ -35,10 +35,6 @@ def get_llm(model="gpt-4o") -> LLM:
         from realtime_ai_character.llm.anyscale_llm import AnysacleLlm
 
         return AnysacleLlm(model=model)
-    elif "rebyte" in model:
-        from realtime_ai_character.llm.rebyte_llm import RebyteLlm
-
-        return RebyteLlm()
     else:
         raise ValueError(f"Invalid llm model: {model}")
 
@@ -68,10 +64,6 @@ def get_chat_model(model="gpt-4o") -> BaseChatModel:
         from realtime_ai_character.llm.anyscale_llm import AnysacleLlm
 
         return AnysacleLlm(model=model).chat_open_ai
-    elif "rebyte" in model:
-        from realtime_ai_character.llm.rebyte_llm import RebyteLlm
-
-        return RebyteLlm().chat_rebyte
     else:
         raise ValueError(f"Invalid llm model: {model}")
 
@@ -80,14 +72,8 @@ def get_chat_model(model="gpt-4o") -> BaseChatModel:
 def get_chat_model_from_env() -> BaseChatModel:
     """GPT-4 has the best performance while generating system prompt."""
 
-    # if os.getenv("REBYTE_API_KEY"):
-    #     return get_chat_model(model="rebyte")
     if os.getenv("OPENAI_API_KEY"):
         return get_chat_model(model="gpt-4o")
-    # elif os.getenv("ANTHROPIC_API_KEY"):
-    #     return get_chat_model(model="claude-2")
-    # elif os.getenv("ANYSCALE_API_KEY"):
-    #     return get_chat_model(model="meta-llama/Llama-2-70b-chat-hf")
     elif os.getenv("LOCAL_LLM_URL"):
         return get_chat_model(model="localhost")
 

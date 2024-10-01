@@ -5,30 +5,36 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.schema import BaseMessage, HumanMessage
 
 from realtime_ai_character.database.chroma import get_chroma
-from realtime_ai_character.llm.base import AsyncCallbackAudioHandler, AsyncCallbackTextHandler, LLM
+from realtime_ai_character.llm.base import (
+    AsyncCallbackAudioHandler,
+    AsyncCallbackTextHandler,
+    LLM,
+)
 from realtime_ai_character.logger import get_logger
 from realtime_ai_character.utils import Character, timed
 
-
 logger = get_logger(__name__)
-
 
 class OpenaiLlm(LLM):
     def __init__(self, model):
         if os.getenv("OPENAI_API_TYPE") == "azure":
-            from langchain.chat_models import AzureChatOpenAI
+            from langchain_openai import AzureChatOpenAI  # Updated import
 
             self.chat_open_ai = AzureChatOpenAI(
                 deployment_name=os.getenv("OPENAI_API_MODEL_DEPLOYMENT_NAME", "gpt-35-turbo"),
-                model=model,
-                temperature=0.5,
+                model_name=model,
+                temperature=0,  # Set temperature to 0 for deterministic output
                 streaming=True,
             )
         else:
-            from langchain.chat_models import ChatOpenAI
+            from langchain_openai import ChatOpenAI  # Updated import
 
-            self.chat_open_ai = ChatOpenAI(model=model, temperature=0.5, streaming=True)
-        self.config = {"model": model, "temperature": 0.5, "streaming": True}
+            self.chat_open_ai = ChatOpenAI(
+                model_name=model,
+                temperature=0,  # Set temperature to 0 for deterministic output
+                streaming=True,
+            )
+        self.config = {"model": model, "temperature": 0, "streaming": True}
         self.db = get_chroma()
 
     def get_config(self):
@@ -50,10 +56,13 @@ class OpenaiLlm(LLM):
         # 1. Generate context
         context = self._generate_context(user_input, character)
 
-        # 2. Add user input to history
+        # 2. Add user input to history with friendly prompt
+        friendly_user_prompt = (
+            f"Please explain the following in simple terms suitable for a young student:\n{user_input}"
+        )
         history.append(
             HumanMessage(
-                content=character.llm_user_prompt.format(context=context, query=user_input)
+                content=character.llm_user_prompt.format(context=context, query=friendly_user_prompt)
             )
         )
 
@@ -69,7 +78,7 @@ class OpenaiLlm(LLM):
 
     def _generate_context(self, query, character: Character) -> str:
         docs = self.db.similarity_search(query)
-        docs = [d for d in docs if d.metadata["character_name"] == character.name]
+        docs = [d for d in docs if d.metadata.get("character_name") == character.name]
         logger.info(f"Found {len(docs)} documents")
 
         context = "\n".join([d.page_content for d in docs])

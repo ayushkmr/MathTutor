@@ -22,8 +22,6 @@ spec:
         env:
         - name: DATABASE_URL
           value: sqlite:///./test.db
-        - name: REBYTE_API_KEY
-          value: <YOUR_REBYTE_API_KEY>
         - name: OPENAI_API_KEY
           value: <YOUR_OPENAI_API_KEY>
         - name: ANTHROPIC_API_KEY
